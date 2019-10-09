@@ -1,0 +1,17 @@
+var Scene = require('Scene');
+var Textures = require('Textures');
+var Materials = require('Materials');
+var FaceTracking = require('FaceTracking');
+var Animation = require('Animation');
+var Reactive = require('Reactive');
+var TouchGestures = require('TouchGestures');
+const Instruction = require('Instruction');
+var face = FaceTracking.face(0);
+//Bones
+var headBone = Scene.root.find('BoneHead');
+var neckBone = Scene.root.find('BoneNeck');
+var chestBone = Scene.root.find('BoneChest');
+var neckSmoothTime = 100;
+Scene.root.find("BoneNeck").transform.rotationX = face.cameraTransform.rotationY.mul(1.0).sum(0).expSmooth(neckSmoothTime);
+Scene.root.find("BoneNeck").transform.rotationY = face.cameraTransform.rotationX.mul(-1.0).sum(0).expSmooth(neckSmoothTime);
+Scene.root.find("BoneNeck").transform.rotationZ = face.cameraTransform.rotationZ.mul(-1.0).sum(0).expSmooth(neckSmoothTime);
